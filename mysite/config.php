@@ -1,13 +1,15 @@
 <?php
+session_start(); // Обязательно для авторизации
+
 $host = 'localhost';
 $db   = 'mysite';
 $user = 'root';
-$pass = '';  // в Laragon пароль пустой
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Ошибка подключения к MySQL: " . $e->getMessage());
+    die("Ошибка подключения: " . $e->getMessage());
 }
 ?>
