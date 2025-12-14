@@ -1,27 +1,33 @@
-/* Цветовая схема */
+/* Пастельная уютная тема */
 :root {
-    --bg-main: #0C0032;
-    --bg-dark: #190061;
-    --accent: #240090;
-    --accent-light: #3500D3;
-    --text-dark: #282828;
+    --bg-main: #f8f5fa;        /* очень светлый лавандовый фон */
+    --bg-card: #ffffff;        /* белые карточки */
+    --accent: #a29bfe;         /* пастельный фиолетовый (основной акцент) */
+    --accent-hover: #9080ff;   /* чуть ярче при ховере */
+    --accent-light: #b0d4ff;    /* пастельно-голубой для кнопок */
+    --text-primary: #4a4a68;   /* мягкий тёмно-серый текст */
+    --text-secondary: #6b6b8a; /* второстепенный текст */
+    --border: #e0e0ff;         /* нежная граница */
+    --shadow: rgba(162, 155, 254, 0.15); /* мягкая тень от акцента */
 }
 
-/* Общий стиль */
+/* Общий фон сайта */
 body {
     background: var(--bg-main);
-    color: white;
-    font-family: Arial, sans-serif;
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
+    line-height: 1.7;
 }
 
 /* Шапка сайта */
 .header {
-    background: var(--bg-dark);
-    padding: 15px 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    margin-bottom: 40px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    box-shadow: 0 4px 20px var(--shadow);
+    margin-bottom: 50px;
 }
 
 .container {
@@ -34,18 +40,19 @@ body {
 }
 
 .nav-left a {
-    color: white;
+    color: var(--text-primary);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 17px;
     margin-right: 40px;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
 .nav-left a:hover {
-    color: var(--accent-light);
+    color: var(--accent);
 }
 
+/* Правая часть — авторизация */
 .nav-right {
     display: flex;
     align-items: center;
@@ -55,86 +62,112 @@ body {
 .btn-auth {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     background: var(--accent-light);
-    color: black;
+    color: #4a4a68;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 30px;
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(176, 212, 255, 0.3);
 }
 
 .btn-auth:hover {
-    background: #5c29ff;
+    background: #9fc8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(176, 212, 255, 0.5);
 }
 
 .btn-auth svg {
-    fill: black;
+    fill: #4a4a68;
 }
 
 .user-greeting {
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .btn-logout {
-    color: #ff6666;
+    color: #ff9999;
     text-decoration: none;
     font-weight: bold;
     font-size: 15px;
+    transition: color 0.3s;
 }
 
 .btn-logout:hover {
-    color: #ff4444;
-    text-decoration: underline;
+    color: #ff7777;
 }
 
 /* Основной контент */
 main {
-    background: var(--text-dark);
-    padding: 40px;
-    border-radius: 16px;
-    max-width: 800px;
-    margin: 0 auto 60px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    color: white;
+    background: var(--bg-card);
+    padding: 50px;
+    border-radius: 24px;
+    max-width: 900px;
+    margin: 0 auto 80px;
+    box-shadow: 0 10px 40px var(--shadow);
+    border: 1px solid var(--border);
 }
 
 main h1 {
-    color: var(--accent-light);
+    color: var(--accent);
     text-align: center;
+    font-size: 34px;
     margin-bottom: 30px;
 }
 
-main input, main textarea {
+main p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Форма контактов */
+main input, 
+main textarea {
     width: 100%;
-    padding: 14px;
-    margin: 12px 0;
-    background: var(--bg-dark);
-    color: white;
-    border: none;
-    border-radius: 12px;
+    padding: 16px;
+    margin: 15px 0;
+    background: #f5f0ff;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
     font-size: 16px;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+main input:focus, 
+main textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.2);
+    background: white;
 }
 
 main button {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     background: var(--accent-light);
-    color: black;
+    color: #4a4a68;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     font-weight: bold;
     font-size: 18px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(176, 212, 255, 0.3);
 }
 
 main button:hover {
-    background: #5c29ff;
+    background: #9fc8ff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(176, 212, 255, 0.4);
 }
