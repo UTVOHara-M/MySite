@@ -1,5 +1,5 @@
 <?php
-session_start(); // Обязательно для авторизации
+session_start();
 
 $host = 'localhost';
 $db   = 'mysite';

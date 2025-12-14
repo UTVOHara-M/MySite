@@ -1,17 +1,15 @@
-/* Пастельная уютная тема */
 :root {
-    --bg-main: #f8f5fa;        /* очень светлый лавандовый фон */
-    --bg-card: #ffffff;        /* белые карточки */
-    --accent: #a29bfe;         /* пастельный фиолетовый (основной акцент) */
-    --accent-hover: #9080ff;   /* чуть ярче при ховере */
-    --accent-light: #b0d4ff;    /* пастельно-голубой для кнопок */
-    --text-primary: #4a4a68;   /* мягкий тёмно-серый текст */
-    --text-secondary: #6b6b8a; /* второстепенный текст */
-    --border: #e0e0ff;         /* нежная граница */
-    --shadow: rgba(162, 155, 254, 0.15); /* мягкая тень от акцента */
+    --bg-main: #0f172a;        
+    --bg-card: #1e293b;        
+    --accent: #55c2d8;         
+    --accent-hover: #00b7e6;    
+    --text-primary: #f1f5f9;    
+    --text-secondary: #cbd5e1; 
+    --border: #334155;         
+    --shadow: rgba(0, 212, 255, 0.1); 
 }
 
-/* Общий фон сайта */
+
 body {
     background: var(--bg-main);
     color: var(--text-primary);
@@ -21,13 +19,16 @@ body {
     line-height: 1.7;
 }
 
-/* Шапка сайта */
+
 .header {
-    background: #ffffff;
-    border-bottom: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.95); 
+    backdrop-filter: blur(10px);
     padding: 20px 0;
-    box-shadow: 0 4px 20px var(--shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     margin-bottom: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .container {
@@ -52,7 +53,7 @@ body {
     color: var(--accent);
 }
 
-/* Правая часть — авторизация */
+
 .nav-right {
     display: flex;
     align-items: center;
@@ -63,8 +64,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--accent-light);
-    color: #4a4a68;
+    background: var(--accent);
+    color: #000;
     border: none;
     padding: 12px 24px;
     border-radius: 30px;
@@ -72,17 +73,17 @@ body {
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(176, 212, 255, 0.3);
+    box-shadow: 0 4px 15px var(--shadow);
 }
 
 .btn-auth:hover {
-    background: #9fc8ff;
+    background: var(--accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(176, 212, 255, 0.5);
+    box-shadow: 0 6px 20px var(--shadow);
 }
 
 .btn-auth svg {
-    fill: #4a4a68;
+    fill: #000;
 }
 
 .user-greeting {
@@ -92,7 +93,7 @@ body {
 }
 
 .btn-logout {
-    color: #ff9999;
+    color: #ff6b6b;
     text-decoration: none;
     font-weight: bold;
     font-size: 15px;
@@ -100,17 +101,16 @@ body {
 }
 
 .btn-logout:hover {
-    color: #ff7777;
+    color: #ff8787;
 }
 
-/* Основной контент */
 main {
     background: var(--bg-card);
     padding: 50px;
-    border-radius: 24px;
+    border-radius: 20px;
     max-width: 900px;
     margin: 0 auto 80px;
-    box-shadow: 0 10px 40px var(--shadow);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     border: 1px solid var(--border);
 }
 
@@ -128,16 +128,15 @@ main p {
     margin: 20px 0;
 }
 
-/* Форма контактов */
 main input, 
 main textarea {
     width: 100%;
     padding: 16px;
     margin: 15px 0;
-    background: #f5f0ff;
+    background: #0f172a;
     color: var(--text-primary);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 12px;
     font-size: 16px;
     box-sizing: border-box;
     transition: all 0.3s ease;
@@ -147,27 +146,185 @@ main input:focus,
 main textarea:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.2);
-    background: white;
+    box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.2);
 }
 
 main button {
     width: 100%;
     padding: 18px;
-    background: var(--accent-light);
-    color: #4a4a68;
+    background: var(--accent);
+    color: black;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     font-weight: bold;
     font-size: 18px;
     cursor: pointer;
     margin-top: 30px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(176, 212, 255, 0.3);
+    box-shadow: 0 4px 15px var(--shadow);
 }
 
 main button:hover {
-    background: #9fc8ff;
+    background: var(--accent-hover);
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(176, 212, 255, 0.4);
+    box-shadow: 0 8px 25px var(--shadow);
 }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .auth-tab.active {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-form h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 26px;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .auth-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(85, 194, 216, 0.2);
+        }
+
+        .auth-form button {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .auth-form button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .auth-error {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .auth-success {
+            background: rgba(107, 255, 150, 0.1);
+            border: 1px solid #6bff96;
+            color: #6bff96;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+
+        .form-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
