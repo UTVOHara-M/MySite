@@ -2,7 +2,7 @@
 session_start();
 
 $host = 'localhost';
-$db   = 'mysite';
+$db = 'mysite';
 $user = 'root';
 $pass = '';
 

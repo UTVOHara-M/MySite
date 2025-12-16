@@ -1,140 +1,203 @@
-<div id="authModal" class="modal-overlay">
+<div id="authModal" class="modal">
     <div class="modal-content">
-        <button class="close-modal" id="closeModal">&times;</button>
+        <span class="close">&times;</span>
         
         <h2>Добро пожаловать</h2>
 
-        <div id="authMessage" class="auth-message"></div>
+        <div id="authMessage"></div>
 
-        <div class="auth-tabs">
-            <button class="auth-tab active" data-tab="login">Вход</button>
-            <button class="auth-tab" data-tab="register">Регистрация</button>
+        <div class="tabs">
+            <button class="tablink active" onclick="openTab(event, 'Login')">Вход</button>
+            <button class="tablink" onclick="openTab(event, 'Register')">Регистрация</button>
         </div>
 
-        <form id="loginForm" class="auth-form active" method="POST">
-            <input type="text" name="username" placeholder="Имя пользователя" required>
-            <input type="password" name="password" placeholder="Пароль" required>
-            <button type="submit">Войти</button>
-            
-            <div class="form-footer">
-                Нет аккаунта? <a href="#" class="switch-to-register">Зарегистрироваться</a>
-            </div>
-        </form>
+        <!-- Вход -->
+        <div id="Login" class="tabcontent">
+            <form id="loginForm">
+                <input type="text" name="username" placeholder="Логин" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
 
-        <form id="registerForm" class="auth-form" method="POST">
-            <input type="text" name="username" placeholder="Имя пользователя" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Пароль" required>
-            <input type="password" name="confirm_password" placeholder="Повторите пароль" required>
-            <button type="submit">Зарегистрироваться</button>
-            
-            <div class="form-footer">
-                Уже есть аккаунт? <a href="#" class="switch-to-login">Войти</a>
-            </div>
-        </form>
+        <!-- Регистрация -->
+        <div id="Register" class="tabcontent" style="display:none;">
+            <form id="registerForm">
+                <input type="text" name="username" placeholder="Логин" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <input type="password" name="password_confirm" placeholder="Повторите пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
     </div>
 </div>
 
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: #1e293b;
+        padding: 30px;
+        border-radius: 16px;
+        width: 400px;
+        max-width: 90%;
+        position: relative;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        color: #aaa;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .close:hover {
+        color: white;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+
+    #authMessage {
+        text-align: center;
+        margin: 15px 0;
+        font-size: 14px;
+        display: none;
+    }
+    #authMessage.success {
+        color: #44ff88;
+    }
+
+    .tabs {
+        display: flex;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #334155;
+    }
+
+    .tablink {
+        flex: 1;  /* ← Сделали равную ширину вкладкам */
+        padding: 12px;
+        background: #334155;
+        border: none;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        transition: background 0.3s;
+    }
+    .tablink.active {
+        background: #00d4ff;
+        color: black;
+    }
+
+    input {
+        width: 100%;  /* ← Полная ширина полей */
+        padding: 14px;
+        margin: 12px 0;
+        background: #0f172a;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;  /* ← Полная ширина кнопки */
+        padding: 16px;
+        background: #00d4ff;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+    }
+    button:hover {
+        background: #00b7e6;
+    }
+</style>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('authModal');
-        const closeBtn = document.getElementById('closeModal');
-        const openBtn = document.getElementById('openAuthModal');
-        const tabs = document.querySelectorAll('.auth-tab');
-        const forms = document.querySelectorAll('.auth-form');
-        const messageDiv = document.getElementById('authMessage');
+    const modal = document.getElementById('authModal');
+    const closeBtn = document.getElementsByClassName('close')[0];
+    const messageDiv = document.getElementById('authMessage');
 
-        if (openBtn) {
-            openBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            });
-        }
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
 
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeModal();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
-        });
+    function openTab(evt, tabName) {
+        document.querySelectorAll('.tabcontent').forEach(tab => tab.style.display = 'none');
+        document.querySelectorAll('.tablink').forEach(link => link.className = link.className.replace(' active', ''));
+        document.getElementById(tabName).style.display = 'block';
+        evt.currentTarget.className += ' active';
+        messageDiv.style.display = 'none';
+    }
 
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            messageDiv.style.display = 'none';
-        }
+    // AJAX для входа
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.append('action', 'login');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                const tabName = this.getAttribute('data-tab');
-                
-                tabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                forms.forEach(form => {
-                    form.classList.remove('active');
-                    if (form.id === tabName + 'Form') {
-                        form.classList.add('active');
-                    }
-                });
-            });
-        });
-
-        document.querySelector('.switch-to-register')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('[data-tab="register"]').click();
-        });
-
-        document.querySelector('.switch-to-login')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('[data-tab="login"]').click();
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            formData.append('action', 'login');
-
-            fetch('auth_process.php', { method: 'POST', body: formData })
-            .then(res => res.json())
-            .then(data => {
-                messageDiv.textContent = data.message;
-                messageDiv.className = data.success ? 'auth-message success' : 'auth-message error';
+        fetch('auth_process.php', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                messageDiv.textContent = 'Вход успешен! Обновляю...';
+                messageDiv.className = 'success';
                 messageDiv.style.display = 'block';
-
-                if (data.success) {
-                    setTimeout(() => location.reload(), 1500);
-                }
-            });
-        });
-
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            formData.append('action', 'register');
-
-            if (formData.get('password') !== formData.get('confirm_password')) {
-                messageDiv.textContent = 'Пароли не совпадают';
-                messageDiv.className = 'auth-message error';
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                messageDiv.textContent = data.message || 'Неверный логин или пароль';
                 messageDiv.style.display = 'block';
-                return;
             }
+        });
+    });
 
-            fetch('auth_process.php', { method: 'POST', body: formData })
-            .then(res => res.json())
-            .then(data => {
-                messageDiv.textContent = data.message;
-                messageDiv.className = data.success ? 'auth-message success' : 'auth-message error';
+    // AJAX для регистрации
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.append('action', 'register');
+
+        if (formData.get('password') !== formData.get('password_confirm')) {
+            messageDiv.textContent = 'Пароли не совпадают';
+            messageDiv.style.display = 'block';
+            return;
+        }
+
+        fetch('auth_process.php', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                messageDiv.textContent = 'Регистрация успешна! Теперь войдите.';
+                messageDiv.className = 'success';
                 messageDiv.style.display = 'block';
-
-                if (data.success) {
-                    setTimeout(() => {
-                        document.querySelector('[data-tab="login"]').click();
-                    }, 2000);
-                }
-            });
+                openTab({currentTarget: document.querySelectorAll('.tablink')[0]}, 'Login');
+            } else {
+                messageDiv.textContent = data.message || 'Логин или email уже заняты';
+                messageDiv.style.display = 'block';
+            }
         });
     });
 </script>

@@ -18,15 +18,14 @@ if ($_POST['action'] === 'register') {
             $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
             $stmt->execute([$username, $email]);
             if ($stmt->fetch()) {
-                $response['message'] = 'Логин или email уже используются';
+                $response['message'] = 'Логин или email уже заняты';
             } else {
-                $hashed = password_hash($password, PASSWORD_DEFAULT);
                 $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-                $stmt->execute([$username, $email, $hashed]);
+                $stmt->execute([$username, $email, $password]);
                 $response['success'] = true;
             }
-        } catch (Exception $e) {
-            $response['message'] = 'Ошибка сервера';
+        } catch (PDOException $e) {
+            $response['message'] = 'Ошибка базы данных';
         }
     }
 } elseif ($_POST['action'] === 'login') {
@@ -38,15 +37,16 @@ if ($_POST['action'] === 'register') {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && $password === $user['password']) {  // Прямая проверка пароля
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];  // ← Добавили сохранение роли
             $response['success'] = true;
         } else {
             $response['message'] = 'Неверный логин или пароль';
         }
-    } catch (Exception $e) {
-        $response['message'] = 'Ошибка сервера';
+    } catch (PDOException $e) {
+        $response['message'] = 'Ошибка базы данных';
     }
 }
 
